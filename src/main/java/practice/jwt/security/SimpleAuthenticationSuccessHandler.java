@@ -49,6 +49,7 @@ public class SimpleAuthenticationSuccessHandler implements AuthenticationSuccess
         Date notBefore = new Date(issuedAt.getTime());
         Date expiresAt = new Date(issuedAt.getTime() + EXPIRATION_TIME);
         String token = JWT.create()
+                          .withIssuer("KADONO")
                           .withIssuedAt(issuedAt)
                           .withNotBefore(notBefore)
                           .withExpiresAt(expiresAt)

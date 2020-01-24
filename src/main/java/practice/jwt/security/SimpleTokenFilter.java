@@ -66,7 +66,7 @@ public class SimpleTokenFilter extends GenericFilterBean {
 
     private void authentication(DecodedJWT jwt) {
         long userId = Long.parseLong(jwt.getSubject());
-        userRepository.findById(userId).ifPresent(user -> {
+        userRepository.find(userId).ifPresent(user -> {
             SimpleLoginUser simpleLoginUser = new SimpleLoginUser(user);
             SecurityContextHolder.getContext().setAuthentication(new UsernamePasswordAuthenticationToken(simpleLoginUser, null, simpleLoginUser.getAuthorities()));
         });

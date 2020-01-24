@@ -7,7 +7,7 @@ import java.util.*;
 
 @Mapper
 public interface UserRepository {
-    Optional<User> findById(long userId);
+    Optional<User> find(long userId);
 
     Optional<User> findByUserName(String userName);
 }
