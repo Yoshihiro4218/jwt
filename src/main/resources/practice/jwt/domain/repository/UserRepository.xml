@@ -10,7 +10,7 @@
         `name` = #{name},
         `password` = #{authenticationType},
         `email` = #{email},
-        `admin_flg` = #{admin},
+        `admin` = #{admin},
         `created_at` = NOW()
         `updated_at` = NOW()
     </sql>
@@ -19,28 +19,20 @@
         `name`,
         `password`,
         `email`,
-        `admin_flg`,
+        `admin`,
         `created_at`,
         `updated_at`
     </sql>
     <select id="find" resultMap="entity">
         SELECT <include refid="selectColumns" />
         FROM `user` u
-            LEFT JOIN `user_credential` uc ON u.id = uc.user_id
-            LEFT JOIN `user_email` ue ON u.id = ue.user_id
-            LEFT JOIN `user_phone` up ON u.id = up.user_id
         WHERE `u`.`id` = #{id}
-        ORDER BY ue.id ASC
     </select>
 
     <select id="findByUserName" resultMap="entity">
       SELECT <include refid="selectColumns" />
         FROM `user` u
-                 LEFT JOIN `user_credential` uc ON u.id = uc.user_id
-                 LEFT JOIN `user_email` ue ON u.id = ue.user_id
-                 LEFT JOIN `user_phone` up ON u.id = up.user_id
-        WHERE `u`.`user_name` = #{userName}
-        ORDER BY ue.id ASC
+        WHERE `u`.`name` = #{userName}
     </select>
 
 <!--    <insert id="create" useGeneratedKeys="true" keyColumn="id" keyProperty="id">-->

@@ -2,7 +2,6 @@ package practice.jwt.config;
 
 import lombok.*;
 import org.springframework.beans.factory.annotation.*;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.*;
 import org.springframework.security.config.annotation.authentication.builders.*;
 import org.springframework.security.config.annotation.web.builders.*;
@@ -52,7 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             // LOGIN
             .formLogin()
                 .loginProcessingUrl("/login").permitAll()
-                    .usernameParameter("email")
+                    .usernameParameter("name")
                     .passwordParameter("pass")
                 .successHandler(authenticationSuccessHandler())
                 .failureHandler(authenticationFailureHandler())
@@ -88,7 +87,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     PasswordEncoder passwordEncoder() {
-        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+//        TODO: パスワードハッシュ化
+//        return PasswordEncoderFactories.createDelegatingPasswordEncoder();
+        return NoOpPasswordEncoder.getInstance();
     }
 
     GenericFilterBean tokenFilter() {
