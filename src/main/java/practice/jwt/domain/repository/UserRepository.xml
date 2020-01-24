@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="practice.jwt.domain.repository.UserRepository">
+    <resultMap id="entity" type="practice.jwt.domain.entity.User" autoMapping="true">
+        <id property="id" column="id"/>
+    </resultMap>
+
+    <sql id="updateColumns">
+        `id` = #{id},
+        `name` = #{name},
+        `password` = #{authenticationType},
+        `email` = #{email},
+        `admin_flg` = #{admin},
+        `created_at` = NOW()
+        `updated_at` = NOW()
+    </sql>
+    <sql id="selectColumns">
+        `id`,
+        `name`,
+        `password`,
+        `email`,
+        `admin_flg`,
+        `created_at`,
+        `updated_at`
+    </sql>
+    <select id="find" resultMap="entity">
+        SELECT <include refid="selectColumns" />
+        FROM `user` u
+            LEFT JOIN `user_credential` uc ON u.id = uc.user_id
+            LEFT JOIN `user_email` ue ON u.id = ue.user_id
+            LEFT JOIN `user_phone` up ON u.id = up.user_id
+        WHERE `u`.`id` = #{id}
+        ORDER BY ue.id ASC
+    </select>
+
+    <select id="findByUserName" resultMap="entity">
+      SELECT <include refid="selectColumns" />
+        FROM `user` u
+                 LEFT JOIN `user_credential` uc ON u.id = uc.user_id
+                 LEFT JOIN `user_email` ue ON u.id = ue.user_id
+                 LEFT JOIN `user_phone` up ON u.id = up.user_id
+        WHERE `u`.`user_name` = #{userName}
+        ORDER BY ue.id ASC
+    </select>
+
+<!--    <insert id="create" useGeneratedKeys="true" keyColumn="id" keyProperty="id">-->
+<!--        INSERT INTO `user`-->
+<!--        SET `ffg_id` = #{ffgId},-->
+<!--            `user_name` = #{userName},-->
+<!--            `first_name` = #{firstName},-->
+<!--            `last_name` = #{lastName},-->
+<!--            `authentication_type` = #{authenticationType},-->
+<!--            `locked` = #{locked},-->
+<!--            `quitted` = #{quitted},-->
+<!--            `created_at` = NOW(),-->
+<!--            `updated_at` = NOW()-->
+<!--    </insert>-->
+
+<!--    <update id="update">-->
+<!--        UPDATE `user`-->
+<!--        SET <include refid="updateColumns" />-->
+<!--        WHERE id = #{id}-->
+<!--    </update>-->
+</mapper>
