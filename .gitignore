@@ -32,3 +32,4 @@ build/
 /HELP.md
 /mvnw
 /mvnw.cmd
+/docker/mysql/data/
